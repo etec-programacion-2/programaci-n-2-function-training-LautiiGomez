@@ -54,13 +54,22 @@ fun main() {
 
 // Etapa 1
 fun calcularPromedio(nota1: Double, nota2: Double): Double {
-    // Implementar aquí
-    return 0.0
+    if (nota1 > 0.0 && nota2 > 0.0) {
+        val suma = nota1 + nota2
+        val promedio = suma / 2
+        return promedio
+    } else {
+        println("Las notas deben ser mayores a 0, de lo contrario se le asignará al alumno la nota mínima de 1")
+        return 1.0
+    }
 }
 
 fun esAprobado(nota: Double): Boolean {
-    // Implementar aquí
-    return false
+    if (nota >= 6.0) {
+        return true
+    } else {
+        return false
+    }
 }
 
 // Etapa 2
