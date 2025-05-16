@@ -74,12 +74,19 @@ fun esAprobado(nota: Double): Boolean {
 
 // Etapa 2
 fun calcularPromedioTresNotas(nota1: Double, nota2: Double, nota3: Double): Double {
-    // Implementar aquí
-    return 0.0
+    if (nota1 > 0.0 && nota2 > 0.0 && nota3 > 0.0) {
+        val suma = nota1 + nota2 + nota3
+        val promedio = suma / 3
+        return promedio
+    } else {
+        println("Las notas deben ser mayores a 0, de lo contrario se le asignará al alumno la nota mínima de 1")
+        return 1.0
+    }
 }
 
 fun obtenerEstadoAlumno(nombre: String, apellido: String, nota: Double): String {
-    // Implementar aquí
+    println("El alumno $nombre $apellido está ${if (esAprobado(nota)) "aprobado" else "desaprobado"}")
+    
     return ""
 }
 
