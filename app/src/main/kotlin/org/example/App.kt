@@ -54,54 +54,137 @@ fun main() {
 
 // Etapa 1
 fun calcularPromedio(nota1: Double, nota2: Double): Double {
-    // Implementar aquí
-    return 0.0
+    if (nota1 > 0.0 && nota2 > 0.0) {
+        val suma = nota1 + nota2
+        val promedio = suma / 2
+        return promedio
+    } else {
+        println("Las notas deben ser mayores a 0, de lo contrario se le asignará al alumno la nota mínima de 1")
+        return 1.0
+    }
 }
 
 fun esAprobado(nota: Double): Boolean {
-    // Implementar aquí
-    return false
+    if (nota >= 6.0) {
+        return true
+    } else {
+        return false
+    }
 }
 
 // Etapa 2
 fun calcularPromedioTresNotas(nota1: Double, nota2: Double, nota3: Double): Double {
-    // Implementar aquí
-    return 0.0
+    if (nota1 > 0.0 && nota2 > 0.0 && nota3 > 0.0) {
+        val suma = nota1 + nota2 + nota3
+        val promedio = suma / 3
+        return promedio
+    } else {
+        println("Las notas deben ser mayores a 0, de lo contrario se le asignará al alumno la nota mínima de 1")
+        return 1.0
+    }
 }
 
 fun obtenerEstadoAlumno(nombre: String, apellido: String, nota: Double): String {
-    // Implementar aquí
+    println("El alumno $nombre $apellido está ${if (esAprobado(nota)) "aprobado" else "desaprobado"}")
+    
     return ""
 }
 
 // Etapa 3
 fun calcularPromedioCurso(notas: List<Double>): Double {
-    // Implementar aquí
-    return 0.0
+    val notasValidas = notas.filter { it > 0 }
+    
+    return if (notasValidas.isNotEmpty()) {
+        notasValidas.sum() / notasValidas.size
+    } else {
+        println("Las notas deben ser mayores a 0, de lo contrario se le asignará al alumno la nota mínima de 1")
+        1.0
+    }
+
+    return 1.0
 }
 
 fun obtenerAlumnosAprobados(nombres: List<String>, notas: List<Double>): List<String> {
-    // Implementar aquí
-    return emptyList()
+    if (nombres.size != notas.size) {
+        println("Error: Las listas de nombres y notas deben tener el mismo tamaño")
+        return emptyList()
+    }
+    
+    val aprobados = mutableListOf<String>()
+    
+    for (i in nombres.indices) {
+        if (notas[i] >= 6.0) {
+            aprobados.add(nombres[i])
+        }
+    }
+    
+    return aprobados
 }
 
 // Etapa 4
 fun generarBoletin(nombre: String, materias: List<String>, notas: List<Double>): String {
-    // Implementar aquí
-    return ""
+    if (materias.size != notas.size) {
+        return "Error: Las listas de materias y notas deben tener el mismo tamaño"
+    }
+    
+    val sb = StringBuilder()
+    
+    sb.appendLine("=========================================")
+    sb.appendLine("             BOLETÍN ESCOLAR             ")
+    sb.appendLine("=========================================")
+    sb.appendLine("Alumno: $nombre")
+    sb.appendLine("Fecha: ${java.time.LocalDate.now()}")
+    sb.appendLine("---------------------------------------------")
+    
+    sb.appendLine("MATERIA                    | NOTA  | ESTADO")
+    sb.appendLine("---------------------------|-------|-------")
+    
+    var sumaNotas = 0.0
+    var aprobadas = 0
+    
+    for (i in materias.indices) {
+        val materia = materias[i]
+        val nota = notas[i]
+        val estado = if (nota >= 6.0) "Aprobado" else "Desaprobado"
+        
+        sb.appendLine(String.format("%-27s| %-5.1f | %s", materia, nota, estado))
+        
+        sumaNotas += nota
+        if (nota >= 6.0) aprobadas++
+    }
+    
+    val promedio = sumaNotas / notas.size
+    val porcentajeAprobadas = (aprobadas.toDouble() / materias.size) * 100
+    
+    sb.appendLine("---------------------------------------------")
+    sb.appendLine("RESUMEN:")
+    sb.appendLine("Promedio general: ${String.format("%.2f", promedio)}")
+    sb.appendLine("Materias aprobadas: $aprobadas de ${materias.size}")
+    sb.appendLine("Porcentaje de aprobación: ${String.format("%.1f", porcentajeAprobadas)}%")
+    
+    val estadoFinal = when {
+        promedio >= 8.0 -> "EXCELENTE"
+        promedio >= 7.0 -> "MUY BUENO"
+        promedio >= 6.0 -> "BUENO"
+        else -> "NECESITA MEJORAR"
+    }
+    
+    sb.appendLine("Estado general: $estadoFinal")
+    sb.appendLine("=============================================")
+    
+    return sb.toString()
 }
 
 fun obtenerNotaMasAlta(notas: List<Double>): Double {
-    // Implementar aquí
-    return 0.0
+    if (notas.isEmpty()) return 0.0
+    return notas.maxOrNull() ?: 0.0
 }
 
 fun obtenerNotaMasBaja(notas: List<Double>): Double {
-    // Implementar aquí
-    return 0.0
+    if (notas.isEmpty()) return 0.0
+    return notas.minOrNull() ?: 0.0
 }
 
 fun contarAprobados(notas: List<Double>): Int {
-    // Implementar aquí
-    return 0
+    return notas.count { it >= 6.0 }
 }
