@@ -92,13 +92,33 @@ fun obtenerEstadoAlumno(nombre: String, apellido: String, nota: Double): String 
 
 // Etapa 3
 fun calcularPromedioCurso(notas: List<Double>): Double {
-    // Implementar aquí
-    return 0.0
+    val notasValidas = notas.filter { it > 0 }
+    
+    return if (notasValidas.isNotEmpty()) {
+        notasValidas.sum() / notasValidas.size
+    } else {
+        println("Las notas deben ser mayores a 0, de lo contrario se le asignará al alumno la nota mínima de 1")
+        1.0
+    }
+
+    return 1.0
 }
 
 fun obtenerAlumnosAprobados(nombres: List<String>, notas: List<Double>): List<String> {
-    // Implementar aquí
-    return emptyList()
+    if (nombres.size != notas.size) {
+        println("Error: Las listas de nombres y notas deben tener el mismo tamaño")
+        return emptyList()
+    }
+    
+    val aprobados = mutableListOf<String>()
+    
+    for (i in nombres.indices) {
+        if (notas[i] >= 6.0) {
+            aprobados.add(nombres[i])
+        }
+    }
+    
+    return aprobados
 }
 
 // Etapa 4
